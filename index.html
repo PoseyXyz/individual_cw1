@@ -7,16 +7,116 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 <body>
-    
+    <div id="app">
+        <div>
+            <div v-for="(lesson, index) in lessons">
+                <div class="lesson">
+                    <p>Subject: {{lesson.subject}}</p>
+                    <p>Location: {{lesson.location}}</p>
+                    <p>Price: {{lesson.price}}</p>
+                    <p>Spaces: {{lesson.spaces}}</p>
+                    <button>Add to cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         var app = new Vue({
             el:"#app",
             data(){
                 return {
-                    
+                    lessons:[
+      {
+        id:1,
+        subject:'Math',
+      location:'London',
+      price:200,
+      spaces:5,
+
+    
+      }, 
+      {
+        id:2,
+        subject:'English',
+      location:'Lagos',
+      price:300,
+      spaces:5,
+
+      
+      },
+       {
+         id:3,
+        subject:'Physics',
+      location:'Abuja',
+      price:200,
+      spaces:5,
+
+    
+      },
+       {
+         id:4,
+        subject:'Chemistry',
+      location:'Benin',
+      price:190,
+      spaces:5,
+
+      
+      },
+       {
+         id:5,
+        subject:'Biology',
+      location:'Zaria',
+      price:150,
+      spaces:5,
+
+      },
+       {
+         id:6,
+        subject:'Art',
+      location:'New York',
+      price:120,
+      spaces:5,
+      },
+       {
+         id:7,
+        subject:'Agriculture',
+      location:'Osun',
+      price:100,
+      spaces:5,
+      },
+       {
+         id:8,
+        subject:'Economics',
+      location:'London',
+      price:100,
+      spaces:5,
+      },
+       {
+         id:9,
+        subject:'History',
+      location:'Ogun',
+      price:90,
+      spaces:5,
+      },
+       {
+         id:10,
+        subject:'Computing',
+      location:'Lagos',
+      price:100,
+      spaces:5,
+      
+      },
+      
+    ],
                 }
             }
         })
     </script>
+    <style scoped>
+        .lesson{
+            border: 1px solid black;
+            margin: 1rem;
+        }
+    </style>
 </body>
 </html>
