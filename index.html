@@ -34,7 +34,7 @@
                     <p>Location: {{lesson.location}}</p>
                     <p>Price: {{lesson.price}}</p>
                     <p>Spaces: {{lesson.spaces}}</p>
-                    <button>Add to cart</button>
+                    <button v-if="lesson.spaces>0" v-on:click="decrementSpace(lesson.id)">Add to cart</button>
                 </div>
             </div>
         </div>
@@ -130,19 +130,34 @@
                     orders:["ascending", "descending"],
                     selectedOrder:'',
                     options:['subject', 'location', 'price', 'spaces'],
-                    selected:'subject',      
+                    selected:'subject',   
+                    cart:[]   
 }
             },
             methods:{
-                handleOrder: ()=>{
-                   
+                handleOrder: ()=>{   
                 if(app.selectedOrder==='ascending'){
                     app.lessons.sort((a,b)=>(a[app.selected] > b[app.selected]) ? 1 : -1)
                 }else if(app.selectedOrder==='descending'){
                 app.lessons.sort((a,b)=>(b[app.selected] > a[app.selected]) ? 1 : -1)
-                    
                 }
             },
+          decrementSpace:(id)=>{
+              let tempLessons = [...app.lessons]
+              let selectedLesson = tempLessons.find(lesson=>lesson.id === id)
+              const index = tempLessons.indexOf(selectedLesson)
+
+              const lesson = tempLessons[index]
+              if (lesson.spaces > 0){
+                  lesson.spaces = lesson.spaces-1
+                  app.lessons = tempLessons
+                 
+              }else{
+                  return null
+              }
+              app.handleOrder()
+          },
+
             }
         })
     </script>
