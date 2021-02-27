@@ -8,7 +8,8 @@
 </head>
 <body>
     <div id="app">
-        <div>
+        <div v-if="showLessonsPage">
+            <button v-if="cart.length>0" v-on:click="switchPages">Cart Page</button>
            <select name="" id="" v-model="selectedOrder" v-on:change="handleOrder">
             <option value="" disabled>Order Option</option>
             <option v-for="(order, index) in orders" v-bind:value="order" >
@@ -34,7 +35,20 @@
                     <p>Location: {{lesson.location}}</p>
                     <p>Price: {{lesson.price}}</p>
                     <p>Spaces: {{lesson.spaces}}</p>
-                    <button v-if="lesson.spaces>0" v-on:click="decrementSpace(lesson.id)">Add to cart</button>
+                    <button v-if="lesson.spaces>0" v-on:click="decrementSpace(lesson.id); addToCart(lesson.id)">Add to cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart" v-else>
+            <button v-on:click="switchPages">Cart Page</button>
+            <div v-for="(lesson, index) in cart">
+                <div class="lesson">
+                    <p>Subject: {{lesson.subject}}</p>
+                    <p>Location: {{lesson.location}}</p>
+                    <p>Price: {{lesson.price}}</p>
+                    <p>Spaces: {{lesson.spaces}}</p>
+                    <button v-on:click="">Remove from cart</button>
                 </div>
             </div>
         </div>
@@ -131,7 +145,8 @@
                     selectedOrder:'',
                     options:['subject', 'location', 'price', 'spaces'],
                     selected:'subject',   
-                    cart:[]   
+                    cart:[],
+                    showLessonsPage:true
 }
             },
             methods:{
@@ -157,6 +172,22 @@
               }
               app.handleOrder()
           },
+          addToCart:(id)=>{
+            
+
+              let tempLessons = [...app.lessons]
+              let selectedLesson = tempLessons.find(lesson=>lesson.id===id)
+              const index = tempLessons.indexOf(selectedLesson)
+
+            
+              let lesson = tempLessons[index]
+              app.lessons = tempLessons
+              app.cart = [...app.cart, lesson]
+              
+          },
+          switchPages:()=>{
+              app.showLessonsPage = !app.showLessonsPage
+          }
 
             }
         })
