@@ -48,7 +48,7 @@
                     <p>Location: {{lesson.location}}</p>
                     <p>Price: {{lesson.price}}</p>
                     <p>Spaces: {{lesson.spaces}}</p>
-                    <button v-on:click="">Remove from cart</button>
+                    <button v-on:click="removeFromCart(lesson.id, index)">Remove from cart</button>
                 </div>
             </div>
         </div>
@@ -187,6 +187,20 @@
           },
           switchPages:()=>{
               app.showLessonsPage = !app.showLessonsPage
+          },
+          removeFromCart:(lessonId, cartIndex)=>{
+            let tempCart = [...app.cart]
+    tempCart = tempCart.filter((item, index)=>index !== cartIndex)
+
+    const tempLessons = [...app.lessons]
+    const selectedLesson = tempLessons.find(lesson=>lesson.id===lessonId)
+    const index = tempLessons.indexOf(selectedLesson)
+
+    const lesson = tempLessons[index]
+    lesson.spaces = lesson.spaces + 1
+
+    app.cart = tempCart
+    app.lessons = tempLessons
           }
 
             }
