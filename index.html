@@ -51,6 +51,12 @@
                     <button v-on:click="removeFromCart(lesson.id, index)">Remove from cart</button>
                 </div>
             </div>
+            <form >
+                <input v-model.trim="checkout.name" type="text" name=""  id="" required>
+                <input v-model.number="checkout.phone" type="number" required>
+                <button v-if="checkout.name !== '' && checkout.phone !==''"
+                v-on:click="confirmSubmission">Checkout</button>
+            </form>
         </div>
     </div>
     <script>
@@ -146,7 +152,11 @@
                     options:['subject', 'location', 'price', 'spaces'],
                     selected:'subject',   
                     cart:[],
-                    showLessonsPage:true
+                    showLessonsPage:true,
+                    checkout:{
+                        name:'',
+                        phone:'',
+                    }
 }
             },
             methods:{
@@ -201,7 +211,13 @@
 
     app.cart = tempCart
     app.lessons = tempLessons
-          }
+          },
+          confirmSubmission:()=>{
+            let checkoutMessage = `Your order has been submitted ${app.checkout.name}`
+            alert(checkoutMessage)
+            app.name = ''
+            app.phone = ''
+        }
 
             }
         })
