@@ -9,6 +9,24 @@
 <body>
     <div id="app">
         <div>
+           <select name="" id="" v-model="selectedOrder">
+            <option v-for="(order, index) in orders" v-bind:value="order">
+                {{order}}
+            </option>
+           </select>
+
+           <select name="" id="" v-model="selected">
+            <option v-for="(option, index) in options" v-bind:value="option">
+                {{option}}
+            </option>
+           </select>
+
+           <div>
+               {{selectedOrder}}
+           </div>
+           <div>
+            {{selected}}
+        </div>
             <div v-for="(lesson, index) in lessons">
                 <div class="lesson">
                     <p>Subject: {{lesson.subject}}</p>
@@ -108,7 +126,11 @@
       },
       
     ],
-                }
+                    orders:["ascending", "descending"],
+                    selectedOrder:'',
+                    options:['subject', 'location', 'price', 'spaces'],
+                    selected:'subject',      
+}
             }
         })
     </script>
