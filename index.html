@@ -9,13 +9,14 @@
 <body>
     <div id="app">
         <div>
-           <select name="" id="" v-model="selectedOrder">
-            <option v-for="(order, index) in orders" v-bind:value="order">
+           <select name="" id="" v-model="selectedOrder" v-on:change="handleOrder">
+            <option value="" disabled>Order Option</option>
+            <option v-for="(order, index) in orders" v-bind:value="order" >
                 {{order}}
             </option>
            </select>
 
-           <select name="" id="" v-model="selected">
+           <select name="" id="" v-model="selected" v-on:change="handleOrder">
             <option v-for="(option, index) in options" v-bind:value="option">
                 {{option}}
             </option>
@@ -131,6 +132,17 @@
                     options:['subject', 'location', 'price', 'spaces'],
                     selected:'subject',      
 }
+            },
+            methods:{
+                handleOrder: ()=>{
+                   
+                if(app.selectedOrder==='ascending'){
+                    app.lessons.sort((a,b)=>(a[app.selected] > b[app.selected]) ? 1 : -1)
+                }else if(app.selectedOrder==='descending'){
+                app.lessons.sort((a,b)=>(b[app.selected] > a[app.selected]) ? 1 : -1)
+                    
+                }
+            },
             }
         })
     </script>
