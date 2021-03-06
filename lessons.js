@@ -5,7 +5,7 @@ let lessons = [
     location:'London',
     price:200,
     spaces:5,
-
+    imageUrl: './images/maths.png'
   
     }, 
     {
@@ -14,7 +14,7 @@ let lessons = [
     location:'Lagos',
     price:300,
     spaces:5,
-
+    imageUrl: './images/english.png'
     
     },
      {
@@ -23,7 +23,7 @@ let lessons = [
     location:'Abuja',
     price:200,
     spaces:5,
-
+        imageUrl: './images/physics.png'
   
     },
      {
@@ -32,7 +32,7 @@ let lessons = [
     location:'Benin',
     price:190,
     spaces:5,
-
+    imageUrl: './images/chemistry.png'
     
     },
      {
@@ -41,7 +41,7 @@ let lessons = [
     location:'Zaria',
     price:150,
     spaces:5,
-
+    imageUrl: './images/biology.png'
     },
      {
        id:6,
@@ -49,6 +49,7 @@ let lessons = [
     location:'New York',
     price:120,
     spaces:5,
+    imageUrl: './images/art.png'
     },
      {
        id:7,
@@ -56,6 +57,7 @@ let lessons = [
     location:'Osun',
     price:100,
     spaces:5,
+    imageUrl: './images/agric.png'
     },
      {
        id:8,
@@ -63,6 +65,7 @@ let lessons = [
     location:'London',
     price:100,
     spaces:5,
+    imageUrl: './images/economics.png'
     },
      {
        id:9,
@@ -70,6 +73,7 @@ let lessons = [
     location:'Ogun',
     price:90,
     spaces:5,
+    imageUrl: './images/history.png'
     },
      {
        id:10,
@@ -77,6 +81,7 @@ let lessons = [
     location:'Lagos',
     price:100,
     spaces:5,
+    imageUrl: './images/computers.png'
     
     },
     

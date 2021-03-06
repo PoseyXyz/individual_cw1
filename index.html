@@ -30,28 +30,42 @@
            <div>
             {{selected}}
         </div>
-            <div v-for="(lesson, index) in lessons">
+        <div class="lesson-grid">
+            <div v-for="(lesson, index) in lessons" >
                 <div class="lesson">
+                    <div class="lesson-img">
+                        <img v-bind:src="lesson.imageUrl" alt="">
+                    </div>
+                    <div class="lesson-info">
                     <p>Subject: {{lesson.subject}}</p>
                     <p>Location: {{lesson.location}}</p>
                     <p>Price: {{lesson.price}}</p>
                     <p>Spaces: {{lesson.spaces}}</p>
                     <button v-if="lesson.spaces>0" v-on:click="decrementSpace(lesson.id); addToCart(lesson.id)">Add to cart</button>
+                    </div>
                 </div>
+            </div>
             </div>
         </div>
 
         <div class="cart" v-else>
             <button v-on:click="switchPages">Cart Page</button>
-            <div v-for="(lesson, index) in cart">
+            <div class="lesson-grid">
+            <div v-for="(lesson, index) in cart" class="lesson-grid">
                 <div class="lesson">
+                    <div class="lesson-img">
+                        <img v-bind:src="lesson.imageUrl" alt="">
+                    </div>
+                    <div class="lesson-info">
                     <p>Subject: {{lesson.subject}}</p>
                     <p>Location: {{lesson.location}}</p>
                     <p>Price: {{lesson.price}}</p>
                     <p>Spaces: {{lesson.spaces}}</p>
                     <button v-on:click="removeFromCart(lesson.id, index)">Remove from cart</button>
+               </div>
                 </div>
             </div>
+        </div>
             <form >
                 <input v-model.trim="checkout.name" type="text" name=""  id="" placeholder="Please type your name" onkeypress="return /[a-z]/i.test(event.key)" required>
                 <input v-model.number="checkout.phone" type="number" placeholder="Please type your phone number" required>
@@ -142,10 +156,46 @@
         })
     </script>
     <style scoped>
-        .lesson{
-            border: 1px solid black;
-            margin: 1rem;
+        .lesson-grid{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
+        .lesson{
+        padding: 1rem;
+        border-radius: 9%;
+        background: #fffffe;
+        font-size: 1.8rem;
+        display: flex;
+        flex-direction: row;
+        border: 2px solid #ff8e3c;
+        
+    }
+  .lesson-img{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .lesson-img img{
+    max-width: 13rem
+  }
+    .lesson-info button{
+      background:#ff8e3c;  
+      padding: .5rem 1rem;
+      border-radius: 5px;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      transition:.5s;
+      float: right;
+      color: #fff;
+    }
+    .lesson button:hover{
+        background: #d9376e;
+    }
+    .lesson-info p span{
+        font-weight: bold;
+    }
     </style>
 </body>
 </html>
