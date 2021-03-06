@@ -78,12 +78,30 @@ let lessons = [
      {
        id:10,
       subject:'Computing',
-    location:'Lagos',
+    location:'Malta',
     price:100,
     spaces:5,
     imageUrl: './images/computers.png'
     
     },
+    {
+        id:11,
+       subject:'Sporting',
+     location:'Ibadan',
+     price:1000,
+     spaces:5,
+     imageUrl: './images/sports.png'
+     
+     },
+     {
+        id:12,
+       subject:'Nutrition',
+     location:'Zaria',
+     price:400,
+     spaces:5,
+     imageUrl: './images/nutrition.png'
+     
+     }
     
   ]
   
