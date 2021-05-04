@@ -14,7 +14,7 @@
     <div id="app">
         <div v-if="showLessonsPage">
             <div class="header">
-                <button v-if="cart.length>0" class="cart-btn" v-on:click="switchPages">Cart Page <i
+                <button v-if="cart.length>0" class="cart-btn" v-on:click="switchPages">{{cart.length}} Cart Page <i
                         class="fa fa-cart-plus" aria-hidden="true"></i></button>
                 <div>
 
@@ -46,7 +46,7 @@
                             <p>Price: #{{lesson.price}}</p>
                             <p>Spaces: {{lesson.spaces}}</p>
                             <button v-if="lesson.spaces>0"
-                                v-on:click="decrementSpace(lesson.id); addToCart(lesson.id)">Add to cart</button>
+                                v-on:click="decrementSpace(lesson.id); addToCart(lesson.id);">Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,9 @@
                     </div>
                 </div>
             </div>
+        
             <form>
+    
                 <div>
                     <h1>Checkout</h1>
                 </div>
@@ -87,12 +89,12 @@
                                 required>
                         </span>
                         <span class="form-group">
-                            <label for="">Phone:</label>
-                            <input v-model.number="checkout.phone" type="number"
+                            <label for="">Phone Number:</label>
+                            <input v-model.number="checkout.phone_number" type="number"
                                 placeholder="Please type your phone number" required>
                         </span>
                     </div>
-                    <span> <button v-if="checkout.name !== '' && checkout.phone !==''" v-on:click="confirmSubmission"
+                    <span> <button v-if="checkout.name !== '' && checkout.phone_number !==''" v-on:click="countOccurences(); postOrder(); confirmSubmission(); updateLesson()"
                             class="checkout-btn">Checkout</button></span>
                 </div>
             </form>
@@ -103,7 +105,7 @@
             el: "#app",
             data() {
                 return {
-                    lessons: lessons,
+                    lessons: [],
                     orders: ["ascending", "descending"],
                     selectedOrder: '',
                     options: ['subject', 'location', 'price', 'spaces'],
@@ -112,14 +114,24 @@
                     showLessonsPage:true,
                     checkout: {
                         name: '',
-                        phone: '',
-                    }
+                        phone_number: '',
+                        lessonsInformation:[]
+                    },
+                    checkoutDetails:[]
                 }
             },
             methods: {
+                async getLessons(){
+let data =  await fetch('https://individual-cw2.herokuapp.com/')
+let res =await data.json()
+this.lessons=res
+
+},
+
                 handleOrder: () => {
                     if (app.selectedOrder === 'ascending') {
                         app.lessons.sort((a, b) => (a[app.selected] > b[app.selected]) ? 1 : -1)
+                    
                     } else if (app.selectedOrder === 'descending') {
                         app.lessons.sort((a, b) => (b[app.selected] > a[app.selected]) ? 1 : -1)
                     }
@@ -171,10 +183,77 @@
                     let checkoutMessage = `Cheers! Your order has been submitted ${app.checkout.name} 😁`
                     alert(checkoutMessage)
                     app.checkout.name = ''
-                    app.checkout.phone = ''
-                }
+                    app.checkout.phone_number = ''
+                },
+                countOccurences: ()=>{
+                //     let tempCart = [...app.cart]
+                //     let selectedLesson = tempCart.find(lesson => lesson.id === id)
+                //     const index = tempCart.indexOf(selectedLesson)
+                //     let lesson = tempCart[index]
+                    
+                
+                //     tempCart.forEach((v) => (v === lesson.name && count++));
+                //    console.log(count);
+                    let items = []
+                    
+                    for (let i = 0; i < app.cart.length; i++) {
+                        let count = 0;
+                        const element = app.cart[i];
+                    
+                        app.cart.forEach((v) => (v === element && count++))
+                        
+                
+                        items = [...items, {
+                            lessonId: element.id,
+                            name: element.subject,
+                            number_of_spaces:count      
+                        }]
+                    }
 
-            }
+                const uniqueObjects = [...new Map(items.map(item=>[item.lessonId, item])).values()]
+                    
+                    console.log(uniqueObjects);
+
+                    app.checkout.lessonsInformation = uniqueObjects
+                    console.log(app.checkout.lessonsInformation);
+
+              
+
+                },
+
+                async postOrder(){
+let data = await fetch('https://individual-cw2.herokuapp.com/order/', {
+    method: "POST",
+    body: JSON.stringify({
+        name:this.checkout.name,
+        phone_number:this.checkout.phone_number,
+        lessonsInformation:this.checkout.lessonsInformation
+    }),
+    headers: {
+"Content-type": "application/json; charset=UTF-8"
+}
+})
+console.log('successful');
+},
+        async updateLesson(){
+            console.log(this.lessons);
+            let data = await fetch('https://individual-cw2.herokuapp.com/', {
+                method:'PUT',
+                body:JSON.stringify(this.lessons),
+                headers:{
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            
+        }
+
+
+            },
+            async created (){
+await this.getLessons()
+
+
+}
         })
     </script>
     <style scoped>
